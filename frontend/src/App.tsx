@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useMutation, useSubscription, gql } from '@apollo/client';
 import { useStore } from './store';
 import { TopBar } from './components/TopBar';

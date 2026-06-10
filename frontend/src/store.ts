@@ -16,6 +16,7 @@ export interface Sensor {
   type: string;
   status: string;
   lastReading: number;
+  zoneId: string;
 }
 
 export interface Zone {

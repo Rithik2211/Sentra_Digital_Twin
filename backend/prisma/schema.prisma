@@ -1,0 +1,86 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Factory {
+  id        String   @id @default(uuid())
+  tenantId  String   @map("tenant_id")
+  name      String
+  location  String
+  createdAt DateTime @default(now()) @map("created_at")
+  zones     Zone[]
+
+  @@map("factories")
+}
+
+model Zone {
+  id          String       @id @default(uuid())
+  factoryId   String       @map("factory_id")
+  factory     Factory      @relation(fields: [factoryId], references: [id], onDelete: Cascade)
+  name        String       // Zone A, Zone B, Zone C, Zone D
+  riskLevel   String       @default("LOW") @map("risk_level") // LOW, MEDIUM, HIGH
+  coordinates Json         // Isometric boundaries or visual metadata
+  sensors     Sensor[]
+  riskEvents  RiskEvent[]
+
+  @@map("zones")
+}
+
+model Sensor {
+  id          String   @id @default(uuid())
+  zoneId      String   @map("zone_id")
+  zone        Zone     @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+  name        String   // e.g. Temp-A1, Gas-B2
+  type        String   // TEMPERATURE, GAS, PRESSURE, NOISE
+  status      String   @default("OK") // OK, WARNING, CRITICAL
+  lastReading Float    @default(0.0) @map("last_reading")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("sensors")
+}
+
+model SimulationRun {
+  id         String      @id @default(uuid())
+  tenantId   String      @map("tenant_id")
+  scenario   String      // e.g. "Night Shift", "Chemical Spill"
+  status     String      @default("IDLE") // IDLE, RUNNING, COMPLETED
+  startedAt  DateTime    @default(now()) @map("started_at")
+  endedAt    DateTime?   @map("ended_at")
+  speed      Int         @default(1)
+  events     RiskEvent[]
+  agents     WorkerAgent[]
+
+  @@map("simulation_runs")
+}
+
+model RiskEvent {
+  id              String        @id @default(uuid())
+  simulationRunId String        @map("simulation_run_id")
+  simulationRun   SimulationRun @relation(fields: [simulationRunId], references: [id], onDelete: Cascade)
+  zoneId          String        @map("zone_id")
+  zone            Zone          @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+  severity        String        // LOW, MEDIUM, HIGH
+  message         String
+  timestamp       DateTime      @default(now())
+
+  @@map("risk_events")
+}
+
+model WorkerAgent {
+  id              String        @id @default(uuid())
+  simulationRunId String        @map("simulation_run_id")
+  simulationRun   SimulationRun @relation(fields: [simulationRunId], references: [id], onDelete: Cascade)
+  name            String
+  x               Float
+  y               Float
+  z               Float
+  status          String        @default("SAFE") // SAFE, AT_RISK, EVACUATING
+  zoneId          String        @map("zone_id")
+
+  @@map("worker_agents")
+}

@@ -8,6 +8,7 @@ import { RiskZonesPanel } from './components/RiskZonesPanel';
 import { BriefingPanel } from './components/BriefingPanel';
 import { TimelineScrubber } from './components/TimelineScrubber';
 import { Factory3D } from './components/Factory3D';
+import { LandingPage } from './components/LandingPage';
 import { AlertCircle } from 'lucide-react';
 
 const INITIALIZE_FACTORY = gql`
@@ -61,6 +62,7 @@ const SIMULATION_TICKS_SUBSCRIPTION = gql`
 `;
 
 function App() {
+  const currentView = useStore((state) => state.currentView);
   const activeRunId = useStore((state) => state.activeRunId);
   const isRunning = useStore((state) => state.isRunning);
   const addTick = useStore((state) => state.addTick);
@@ -92,9 +94,14 @@ function App() {
     }
   }, [data, addTick, setRunning, setActiveRunId]);
 
+  // If landing page is active, render it
+  if (currentView === 'landing') {
+    return <LandingPage />;
+  }
+
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 overflow-hidden font-sans">
-      {/* Black Top Header */}
+      {/* Top Header Bar */}
       <TopBar />
 
       {/* Main Dashboard Layout Grid */}

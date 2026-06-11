@@ -54,6 +54,7 @@ interface SentraState {
   playbackMode: 'live' | 'history';
   briefing: string;
   isBriefingLoading: boolean;
+  currentView: 'landing' | 'twin';
   
   // Actions
   setScenario: (scenario: string) => void;
@@ -65,6 +66,7 @@ interface SentraState {
   setPlaybackMode: (mode: 'live' | 'history') => void;
   setBriefing: (briefing: string) => void;
   setBriefingLoading: (loading: boolean) => void;
+  setView: (view: 'landing' | 'twin') => void;
   clearHistory: () => void;
   getCurrentTick: () => SimTick | null;
 }
@@ -79,6 +81,7 @@ export const useStore = create<SentraState>((set, get) => ({
   playbackMode: 'live',
   briefing: '',
   isBriefingLoading: false,
+  currentView: 'landing',
 
   setScenario: (scenario) => set({ selectedScenario: scenario }),
   setSpeed: (speed) => set({ speedMultiplier: speed }),
@@ -109,6 +112,7 @@ export const useStore = create<SentraState>((set, get) => ({
   })),
   setBriefing: (briefing) => set({ briefing }),
   setBriefingLoading: (loading) => set({ isBriefingLoading: loading }),
+  setView: (view) => set({ currentView: view }),
   clearHistory: () => set({ 
     tickHistory: [], 
     currentTickIndex: 0, 

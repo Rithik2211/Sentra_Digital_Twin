@@ -1,21 +1,37 @@
 import React from 'react';
-import { ShieldCheck, Server, Network, Users } from 'lucide-react';
+import { ShieldCheck, Server, Network, Users, ArrowLeft } from 'lucide-react';
+import { useStore } from '../store';
 
 export const TopBar: React.FC = () => {
+  const setView = useStore((state) => state.setView);
+
   return (
     <header className="bg-industrial-black border-b border-zinc-900 h-16 flex items-center justify-between px-6 select-none shrink-0 text-white shadow-md">
-      {/* Brand logo */}
-      <div className="flex items-center space-x-3">
-        <div className="w-8 h-8 rounded-lg bg-coral flex items-center justify-center font-extrabold text-white text-base shadow-sm">
-          S
-        </div>
-        <div>
-          <h1 className="text-sm font-extrabold tracking-wider uppercase leading-none flex items-center">
-            SENTRA <span className="text-[10px] text-coral ml-1 font-bold">DIGITAL TWIN</span>
-          </h1>
-          <span className="text-[9px] text-zinc-500 font-bold uppercase tracking-widest leading-none block mt-0.5">
-            Enterprise Industrial Safety Framework
-          </span>
+      {/* Brand logo & back button */}
+      <div className="flex items-center space-x-4">
+        <button
+          onClick={() => setView('landing')}
+          className="flex items-center space-x-1.5 text-xs font-bold bg-zinc-900 border border-zinc-800 hover:text-coral hover:border-coral px-3 py-1.5 rounded transition-all cursor-pointer"
+          title="Return to Portal Landing Page"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">Portal Home</span>
+        </button>
+
+        <div className="hidden md:block w-px h-6 bg-zinc-800" />
+
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 rounded-lg bg-coral flex items-center justify-center font-extrabold text-white text-base shadow-sm">
+            S
+          </div>
+          <div>
+            <h1 className="text-sm font-extrabold tracking-wider uppercase leading-none flex items-center">
+              SENTRA <span className="text-[10px] text-coral ml-1 font-bold">DIGITAL TWIN</span>
+            </h1>
+            <span className="text-[9px] text-zinc-500 font-bold uppercase tracking-widest leading-none block mt-0.5">
+              Enterprise Industrial Safety Framework
+            </span>
+          </div>
         </div>
       </div>
 
@@ -37,7 +53,7 @@ export const TopBar: React.FC = () => {
 
       {/* Cluster/System Telemetry */}
       <div className="flex items-center space-x-5">
-        <div className="flex items-center space-x-2 bg-zinc-900/40 px-3 py-1.5 rounded-md border border-zinc-800/60">
+        <div className="hidden lg:flex items-center space-x-2 bg-zinc-900/40 px-3 py-1.5 rounded-md border border-zinc-800/60">
           <Server className="w-3.5 h-3.5 text-coral" />
           <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider">
             Row Level Security (RLS) Active

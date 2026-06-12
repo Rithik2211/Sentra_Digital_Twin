@@ -51,8 +51,8 @@ export const Factory3D: React.FC = () => {
 
     // 1. SCENE
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0c0e12); // Deep premium gray
-    scene.fog = new THREE.FogExp2(0x0c0e12, 0.015);
+    scene.background = new THREE.Color(0xf8fafc); // Clean light background
+    scene.fog = new THREE.FogExp2(0xf8fafc, 0.015);
 
     // 2. CAMERA (Isometric perspective)
     const aspect = width / height;
@@ -113,7 +113,7 @@ export const Factory3D: React.FC = () => {
     // 6. DETAILED METALLIC FLOOR PLATFORM
     const floorGeo = new THREE.BoxGeometry(20, 0.5, 20);
     const floorMat = new THREE.MeshStandardMaterial({
-      color: 0x111827, // Dark slate floor
+      color: 0xe2e8f0, // Light concrete floor
       roughness: 0.85,
       metalness: 0.25,
     });
@@ -123,7 +123,7 @@ export const Factory3D: React.FC = () => {
     scene.add(floor);
 
     // Floor grids
-    const gridHelper = new THREE.GridHelper(20, 20, 0xE8593C, 0x374151);
+    const gridHelper = new THREE.GridHelper(20, 20, 0xE8593C, 0xcbd5e1);
     gridHelper.position.set(10, 0.01, 10);
     if (Array.isArray(gridHelper.material)) {
       gridHelper.material.forEach(m => { m.transparent = true; m.opacity = 0.25; });
@@ -164,7 +164,7 @@ export const Factory3D: React.FC = () => {
       const ctx = canvas.getContext('2d')!;
       ctx.fillStyle = '#F59E0B'; // Amber
       ctx.fillRect(0, 0, 64, 64);
-      ctx.fillStyle = '#111827'; // Dark Slate
+      ctx.fillStyle = '#f8fafc'; // Light Slate
       ctx.beginPath();
       ctx.moveTo(0, 0);
       ctx.lineTo(32, 0);
@@ -665,25 +665,25 @@ export const Factory3D: React.FC = () => {
   }, [selectedScenario]);
 
   return (
-    <div className="relative w-full h-full min-h-[400px] bg-slate-950 overflow-hidden">
+    <div className="relative w-full h-full min-h-[400px] bg-slate-50 overflow-hidden">
       <div ref={containerRef} className="w-full h-full" />
       
       {/* 3D Dashboard Overlays */}
       <div className="absolute top-4 left-4 pointer-events-none flex flex-col space-y-1">
         <div className="flex items-center space-x-2">
           <span className="w-2.5 h-2.5 rounded-full bg-coral pulsing-overlay" />
-          <span className="text-white text-xs font-bold uppercase tracking-widest bg-slate-900/80 px-2.5 py-1 rounded border border-slate-800">
+          <span className="text-slate-700 text-xs font-bold uppercase tracking-widest bg-white/80 px-2.5 py-1 rounded border border-slate-200">
             Digital Twin Isometric Feed — 1080p Active
           </span>
         </div>
       </div>
 
       {/* Grid Zone overlay labels */}
-      <div className="absolute bottom-6 left-6 pointer-events-none grid grid-cols-2 gap-x-12 gap-y-1 bg-slate-950/70 p-3 rounded border border-slate-800 backdrop-blur-sm">
-        <div className="text-gray-400 text-xs font-semibold"><span className="text-coral">Zone A:</span> Blending Silos</div>
-        <div className="text-gray-400 text-xs font-semibold"><span className="text-coral">Zone B:</span> Blast Furnace</div>
-        <div className="text-gray-400 text-xs font-semibold"><span className="text-coral">Zone C:</span> Rolling Mill Extruders</div>
-        <div className="text-gray-400 text-xs font-semibold"><span className="text-coral">Zone D:</span> Chemical Pressurized Sphere</div>
+      <div className="absolute bottom-6 left-6 pointer-events-none grid grid-cols-2 gap-x-12 gap-y-1 bg-white/80 p-3 rounded border border-slate-200 backdrop-blur-sm shadow-sm">
+        <div className="text-slate-600 text-xs font-semibold"><span className="text-coral">Zone A:</span> Blending Silos</div>
+        <div className="text-slate-600 text-xs font-semibold"><span className="text-coral">Zone B:</span> Blast Furnace</div>
+        <div className="text-slate-600 text-xs font-semibold"><span className="text-coral">Zone C:</span> Rolling Mill Extruders</div>
+        <div className="text-slate-600 text-xs font-semibold"><span className="text-coral">Zone D:</span> Chemical Pressurized Sphere</div>
       </div>
     </div>
   );

@@ -117,7 +117,7 @@ function App() {
         </div>
 
         {/* Center Column: Isometric 3D Canvas & Timeline Controls */}
-        <div className="flex-1 flex flex-col h-full bg-slate-950 overflow-hidden relative">
+        <div className="flex-1 flex flex-col h-full bg-slate-50 overflow-hidden relative">
           {error && (
             <div className="absolute top-16 left-4 right-4 z-50 bg-red-900/90 text-white p-3 rounded-lg border border-red-700 flex items-center space-x-2 text-xs shadow-md">
               <AlertCircle className="w-4 h-4 text-red-300" />

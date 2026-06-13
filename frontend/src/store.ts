@@ -55,6 +55,7 @@ interface SentraState {
   briefing: string;
   isBriefingLoading: boolean;
   currentView: 'landing' | 'twin';
+  tenantContext: string;
   
   // Actions
   setScenario: (scenario: string) => void;
@@ -67,6 +68,7 @@ interface SentraState {
   setBriefing: (briefing: string) => void;
   setBriefingLoading: (loading: boolean) => void;
   setView: (view: 'landing' | 'twin') => void;
+  setTenantContext: (tenantId: string) => void;
   clearHistory: () => void;
   getCurrentTick: () => SimTick | null;
 }
@@ -82,6 +84,7 @@ export const useStore = create<SentraState>((set, get) => ({
   briefing: '',
   isBriefingLoading: false,
   currentView: 'landing',
+  tenantContext: 'tenant-default',
 
   setScenario: (scenario) => set({ selectedScenario: scenario }),
   setSpeed: (speed) => set({ speedMultiplier: speed }),
@@ -113,6 +116,7 @@ export const useStore = create<SentraState>((set, get) => ({
   setBriefing: (briefing) => set({ briefing }),
   setBriefingLoading: (loading) => set({ isBriefingLoading: loading }),
   setView: (view) => set({ currentView: view }),
+  setTenantContext: (tenantId) => set({ tenantContext: tenantId }),
   clearHistory: () => set({ 
     tickHistory: [], 
     currentTickIndex: 0, 

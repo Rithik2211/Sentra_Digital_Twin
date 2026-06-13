@@ -4,6 +4,8 @@ import { useStore } from '../store';
 
 export const TopBar: React.FC = () => {
   const setView = useStore((state) => state.setView);
+  const tenantContext = useStore((state) => state.tenantContext);
+  const setTenantContext = useStore((state) => state.setTenantContext);
 
   return (
     <header className="bg-industrial-black border-b border-zinc-900 h-16 flex items-center justify-between px-6 select-none shrink-0 text-white shadow-md">
@@ -43,10 +45,11 @@ export const TopBar: React.FC = () => {
         </span>
         <select 
           className="bg-transparent text-xs font-bold text-zinc-200 focus:outline-hidden hover:text-white cursor-pointer"
-          defaultValue="tenant-default"
+          value={tenantContext}
+          onChange={(e) => setTenantContext(e.target.value)}
         >
           <option value="tenant-default" className="bg-zinc-950 text-white font-bold">Tata Steel — Jamshedpur Complex</option>
-          <option value="tenant-reliance" className="bg-zinc-950 text-white font-bold">Reliance Industries — Jamnagar Petro</option>
+          <option value="tenant-tvs" className="bg-zinc-950 text-white font-bold">TVS Motors — Hosur Plant</option>
           <option value="tenant-mahindra" className="bg-zinc-950 text-white font-bold">Mahindra Aerospace — Bengaluru</option>
         </select>
       </div>
